@@ -1,0 +1,35 @@
+<template>
+  <section>
+    <p>This board is empty. Create a new column to get started.</p>
+    <base-button>+ Add New Column</base-button>
+  </section>
+</template>
+
+<script setup>
+import BaseButton from '../UI/BaseButton.vue'
+// Add your script logic here
+</script>
+
+<style scoped>
+section {
+  height: 100vh;
+  display: flex;
+  padding: 1rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 3rem;
+  color: white;
+}
+button {
+  padding: 1rem;
+  font-size: 15px;
+  font-weight: 600;
+}
+p {
+  font-size: 18px;
+  font-weight: 700;
+  color: #828fa3;
+}
+</style>
