@@ -13,5 +13,6 @@ button {
   text-align: center;
   justify-content: center;
   align-items: center;
+  font-weight: 700;
 }
 </style>

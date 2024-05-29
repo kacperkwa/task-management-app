@@ -2,13 +2,13 @@
   <div class="app">
     <the-header></the-header>
     <empty-board></empty-board>
-
-    <!-- Your app content goes here -->
+    <add-form></add-form>
   </div>
 </template>
 <script setup>
 import TheHeader from './components/layout/TheHeader.vue'
 import EmptyBoard from './components/board/EmptyBoard.vue'
+import AddForm from './components/dialogs/AddForm.vue'
 </script>
 
 <style>

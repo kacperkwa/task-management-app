@@ -1,12 +1,11 @@
-import BaseButton from '../UI/BaseButton.vue';
 <template>
   <header>
     <nav>
       <div>
-        <a href="home"><img src="../../assets/icons/logo-mobile.svg" alt="" /></a>
+        <a class="logo" href="home"><img src="../../assets/icons/logo-mobile.svg" alt="" /></a>
       </div>
       <ul>
-        <li>Platform Launch</li>
+        <li class="platform-launch">Platform Launch</li>
         <li>
           <base-button
             ><img src="../../assets/icons/icon-add-task-mobile.svg" alt=""
@@ -16,7 +15,7 @@ import BaseButton from '../UI/BaseButton.vue';
     </nav>
   </header>
 </template>
-
+<script setup></script>
 <style scoped>
 header {
   position: fixed;
@@ -47,5 +46,10 @@ li {
 }
 li button img {
   width: 16px;
+}
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>
