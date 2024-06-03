@@ -1,8 +1,8 @@
 <template>
-  <base-dialog>
+  <base-dialog v-if="props.showAddForm">
     <h2>Add New Task</h2>
     <form>
-      <label for="task">Title</label>
+      <label for="task">Task</label>
       <input type="text" id="task" placeholder="e.g take coffee break" />
       <label for="description">Description</label>
       <textarea
@@ -19,11 +19,10 @@ a little."
           id="subtasks"
           placeholder="e.g take coffee break"
         />
-        <button class="delete-subtask-btn">
+        <button type="button" class="delete-subtask-btn">
           <img src="../../assets/icons/icon-cross.svg" alt="cross sign/delete" />
         </button>
       </div>
-
       <base-button class="add-subtask" type="button">+ Add Subtask</base-button>
       <label for="status">Status</label>
       <select id="status">
@@ -37,7 +36,15 @@ a little."
 </template>
 
 <script setup>
-// Your script setup code here
+import { defineProps } from 'vue'
+const props = defineProps({
+  showAddForm: {
+    type: Boolean,
+    required: true
+  }
+})
+
+
 </script>
 
 <style scoped>
@@ -66,8 +73,8 @@ label {
   margin-top: 1rem;
 }
 textarea {
-  /* make bigger area when a lot of text */
   min-height: 100px;
+  line-height: 20px;
 }
 .add-subtask {
   background-color: white;
