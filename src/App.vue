@@ -1,14 +1,21 @@
 <template>
   <div class="app">
-    <the-header></the-header>
-    <empty-board></empty-board>
+    <the-header @showAddForm="handleShowAddForm"></the-header>
+    <empty-board @showAddForm="handleShowAddForm"></empty-board>
+    <add-new-task :isShowAddFormVisible="isVisible"></add-new-task>
   </div>
 </template>
 <script setup>
 import TheHeader from './components/layout/TheHeader.vue'
 import EmptyBoard from './components/board/EmptyBoard.vue'
+import AddNewTask from './components/dialogs/AddNewTask.vue'
+import { ref } from 'vue'
+const isVisible = ref(false)
+const handleShowAddForm = () => {
+  isVisible.value = true
+  console.log(isVisible.value)
+}
 </script>
-
 <style>
 .app {
   min-height: 100vh;

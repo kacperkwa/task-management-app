@@ -1,5 +1,5 @@
 <template>
-  <base-dialog v-if="props.showAddForm">
+  <base-dialog v-if="props.isShowAddFormVisible">
     <h2>Add New Task</h2>
     <form>
       <label for="task">Task</label>
@@ -38,13 +38,11 @@ a little."
 <script setup>
 import { defineProps } from 'vue'
 const props = defineProps({
-  showAddForm: {
+  isShowAddFormVisible: {
     type: Boolean,
     required: true
   }
 })
-
-
 </script>
 
 <style scoped>

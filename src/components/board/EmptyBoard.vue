@@ -2,19 +2,16 @@
   <section>
     <p>This board is empty. Create a new column to get started.</p>
     <base-button @click="showAddForm">+ Add New Column</base-button>
-    <add-new-task :showAddForm="isShow"></add-new-task>
   </section>
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import AddNewTask from '../dialogs/AddNewTask.vue'
-import BaseButton from '../UI/BaseButton.vue'
-const isShow = ref(false)
-
+import { ref, defineEmits } from 'vue'
+const isVisibe = ref(false)
+const emit = defineEmits(['showAddForm'])
 const showAddForm = () => {
-  isShow.value = !isShow.value
-  console.log(isShow.value)
+  isVisibe.value = true
+  emit('showAddForm', isVisibe.value)
 }
 </script>
 <style scoped>

@@ -7,7 +7,7 @@
       <ul>
         <li class="platform-launch">Platform Launch</li>
         <li>
-          <base-button
+          <base-button @click="showAddForm"
             ><img src="../../assets/icons/icon-add-task-mobile.svg" alt=""
           /></base-button>
         </li>
@@ -15,7 +15,16 @@
     </nav>
   </header>
 </template>
-<script setup></script>
+<script setup>
+import { ref, defineEmits } from 'vue'
+
+const isAddFormVisible = ref(false)
+const emit = defineEmits(['showAddForm'])
+const showAddForm = () => {
+  isAddFormVisible.value = true
+  emit('showAddForm', isAddFormVisible.value)
+}
+</script>
 <style scoped>
 header {
   position: fixed;

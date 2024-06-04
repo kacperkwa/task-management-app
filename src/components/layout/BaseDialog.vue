@@ -1,6 +1,6 @@
 <template>
   <teleport to="body">
-    <div class="base-dialog" @click="closeAddForm" >
+    <div class="base-dialog" @click="closeAddForm">
       <div class="dialog-card" @click.stop>
         <slot></slot>
       </div>
@@ -8,14 +8,7 @@
   </teleport>
 </template>
 <script setup>
-//provide information if the base dialog is open to the emtptyboard element
-import { ref, provide } from 'vue'
-const isShow = ref()
-const closeAddForm = () => {
-  isShow.value = false
-  console.log(isShow.value)
-}
-provide('isShow', isShow)
+
 </script>
 
 <style scoped>
