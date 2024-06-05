@@ -8,7 +8,15 @@
   </teleport>
 </template>
 <script setup>
+import { ref, defineEmits } from 'vue'
 
+const isOpen = ref(true)
+const emit = defineEmits(['closeAddForm'])
+const closeAddForm = () => {
+  isOpen.value = !isOpen.value
+  console.log(isOpen.value)
+  emit('closeAddForm', isOpen.value)
+}
 </script>
 
 <style scoped>

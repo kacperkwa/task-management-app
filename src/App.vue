@@ -2,7 +2,10 @@
   <div class="app">
     <the-header @showAddForm="handleShowAddForm"></the-header>
     <empty-board @showAddForm="handleShowAddForm"></empty-board>
-    <add-new-task :isShowAddFormVisible="isVisible"></add-new-task>
+    <add-new-task
+      :isShowAddFormVisible="isVisible"
+      @closeAddForm="handleCloseAddForm"
+    ></add-new-task>
   </div>
 </template>
 <script setup>
@@ -11,10 +14,14 @@ import EmptyBoard from './components/board/EmptyBoard.vue'
 import AddNewTask from './components/dialogs/AddNewTask.vue'
 import { ref } from 'vue'
 const isVisible = ref(false)
-const handleShowAddForm = () => {
-  isVisible.value = true
+const handleShowAddForm = (data) => {
+  isVisible.value = data
   console.log(isVisible.value)
 }
+const handleCloseAddForm = (data) => {
+  isVisible.value = data
+}
+console.log(isVisible.value)
 </script>
 <style>
 .app {

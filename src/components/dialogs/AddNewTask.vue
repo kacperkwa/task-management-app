@@ -1,5 +1,5 @@
 <template>
-  <base-dialog v-if="props.isShowAddFormVisible">
+  <base-dialog @closeAddForm="handleEvent" v-if="props.isShowAddFormVisible || closeAddForm">
     <h2>Add New Task</h2>
     <form>
       <label for="task">Task</label>
@@ -36,13 +36,20 @@ a little."
 </template>
 
 <script setup>
-import { defineProps } from 'vue'
+import { defineProps, ref, defineEmits } from 'vue'
+const closeAddForm = ref(false)
+const emit = defineEmits(['closeAddForm'])
 const props = defineProps({
   isShowAddFormVisible: {
     type: Boolean,
     required: true
   }
 })
+
+const handleEvent = (data) => {
+  closeAddForm.value = data
+  emit('closeAddForm', data)
+}
 </script>
 
 <style scoped>
