@@ -1,7 +1,8 @@
 <template>
   <div class="app">
     <the-header @showAddForm="handleShowAddForm"></the-header>
-    <empty-board @showAddForm="handleShowAddForm"></empty-board>
+    <empty-board @showAddForm="handleShowAddForm" v-if="isEmpty"></empty-board>
+    <task-board v-if="!isEmpty"></task-board>
     <add-new-task
       :isShowAddFormVisible="isVisible"
       @closeAddForm="handleCloseAddForm"
@@ -12,8 +13,10 @@
 import TheHeader from './components/layout/TheHeader.vue'
 import EmptyBoard from './components/board/EmptyBoard.vue'
 import AddNewTask from './components/dialogs/AddNewTask.vue'
+import TaskBoard from './components/board/TaskBoard.vue'
 import { ref } from 'vue'
 const isVisible = ref(false)
+const isEmpty = ref(false)
 const handleShowAddForm = (data) => {
   isVisible.value = data
   console.log(isVisible.value)
