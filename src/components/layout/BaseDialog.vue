@@ -14,7 +14,6 @@ const isOpen = ref(true)
 const emit = defineEmits(['closeAddForm'])
 const closeAddForm = () => {
   isOpen.value = !isOpen.value
-  console.log(isOpen.value)
   emit('closeAddForm', isOpen.value)
 }
 </script>

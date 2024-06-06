@@ -16,15 +16,13 @@ import AddNewTask from './components/dialogs/AddNewTask.vue'
 import TaskBoard from './components/board/TaskBoard.vue'
 import { ref } from 'vue'
 const isVisible = ref(false)
-const isEmpty = ref(false)
+const isEmpty = ref(true)
 const handleShowAddForm = (data) => {
   isVisible.value = data
-  console.log(isVisible.value)
 }
 const handleCloseAddForm = (data) => {
   isVisible.value = data
 }
-console.log(isVisible.value)
 </script>
 <style>
 .app {

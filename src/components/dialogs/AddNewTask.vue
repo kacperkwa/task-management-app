@@ -12,18 +12,18 @@
 a little."
       ></textarea>
       <label for="subtasks">Subtasks</label>
-      <div class="subtask">
+      <div v-for="(subtask, subtaskId) in subtasks" :key="subtaskId" class="subtask">
         <input
           class="subtask-input"
+          v-model="subtask.text"
           type="text"
-          id="subtasks"
           placeholder="e.g take coffee break"
         />
-        <button type="button" class="delete-subtask-btn">
+        <button type="button" class="delete-subtask-btn" @click="removeSubtask(subtaskId)">
           <img src="../../assets/icons/icon-cross.svg" alt="cross sign/delete" />
         </button>
       </div>
-      <base-button class="add-subtask" type="button">+ Add Subtask</base-button>
+      <base-button class="add-subtask" type="button" @click="addSubtask">+ Add Subtask</base-button>
       <label for="status">Status</label>
       <select id="status">
         <option value="todo">Todo</option>
@@ -37,6 +37,7 @@ a little."
 
 <script setup>
 import { defineProps, ref, defineEmits } from 'vue'
+//closing the dialog
 const closeAddForm = ref(false)
 const emit = defineEmits(['closeAddForm'])
 const props = defineProps({
@@ -45,10 +46,19 @@ const props = defineProps({
     required: true
   }
 })
-
 const handleEvent = (data) => {
   closeAddForm.value = data
   emit('closeAddForm', data)
+}
+//adding adidtional subtask
+const subtaskId = ref(0)
+const subtasks = ref([])
+const addSubtask = () => {
+  subtasks.value.push({ id: subtaskId.value++, text: '' })
+}
+//removing subtask which is clicked
+const removeSubtask = (id) => {
+  subtasks.value.splice(id, 1)
 }
 </script>
 
@@ -94,7 +104,7 @@ textarea {
   gap: 0.5rem;
   align-items: center;
 }
-#subtasks {
+.subtask-input {
   flex: 1;
 }
 select {
