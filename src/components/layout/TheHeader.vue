@@ -1,6 +1,6 @@
 <template>
   <header>
-    <nav>
+    <section>
       <div>
         <a class="logo" href="home"><img src="../../assets/icons/logo-mobile.svg" alt="" /></a>
       </div>
@@ -12,7 +12,7 @@
           /></base-button>
         </li>
       </ul>
-    </nav>
+    </section>
   </header>
 </template>
 <script setup>
@@ -33,7 +33,7 @@ header {
   color: white;
   font-size: 18px;
 }
-nav {
+section {
   padding: 1rem;
   height: 100%;
   display: flex;

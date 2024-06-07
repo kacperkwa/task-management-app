@@ -12,14 +12,14 @@
 a little."
       ></textarea>
       <label for="subtasks">Subtasks</label>
-      <div v-for="(subtask, subtaskId) in subtasks" :key="subtaskId" class="subtask">
+      <div v-for="(subtask, index) in subtasks" :key="index" class="subtask">
         <input
           class="subtask-input"
           v-model="subtask.text"
           type="text"
           placeholder="e.g take coffee break"
         />
-        <button type="button" class="delete-subtask-btn" @click="removeSubtask(subtaskId)">
+        <button type="button" class="delete-subtask-btn" @click="removeSubtask(subtask.id)">
           <img src="../../assets/icons/icon-cross.svg" alt="cross sign/delete" />
         </button>
       </div>
@@ -36,20 +36,20 @@ a little."
 </template>
 
 <script setup>
+import { Guid } from 'js-guid'
 import { ref } from 'vue'
 import { useDialogStore } from '../../stores/dialog.js'
 
 const store = useDialogStore()
 
-//adding adidtional subtask
-const subtaskId = ref(0)
+
 const subtasks = ref([])
 const addSubtask = () => {
-  subtasks.value.push({ id: subtaskId.value++, text: '' })
+  subtasks.value.push({ id: Guid.newGuid().toString(), text: '' })
 }
-//removing subtask which is clicked
-const removeSubtask = (id) => {
-  subtasks.value.splice(id, 1)
+
+const removeSubtask = (index) => {
+  subtasks.value = subtasks.value.filter((subtask) => subtask.id !== index)
 }
 const closeForm = () => {
   store.hideAddTaskForm()
