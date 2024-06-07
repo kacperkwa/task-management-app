@@ -16,13 +16,10 @@
   </header>
 </template>
 <script setup>
-import { ref, defineEmits } from 'vue'
-
-const isAddFormVisible = ref(false)
-const emit = defineEmits(['showAddForm'])
+import { useDialogStore } from '@/stores/dialog'
+const store = useDialogStore()
 const showAddForm = () => {
-  isAddFormVisible.value = true
-  emit('showAddForm', isAddFormVisible.value)
+  store.showAddTaskForm()
 }
 </script>
 <style scoped>

@@ -1,6 +1,6 @@
 <template>
   <teleport to="body">
-    <div class="base-dialog" @click="closeAddForm">
+    <div class="base-dialog" @click="closeDialog">
       <div class="dialog-card" @click.stop>
         <slot></slot>
       </div>
@@ -8,13 +8,13 @@
   </teleport>
 </template>
 <script setup>
-import { ref, defineEmits } from 'vue'
+import { defineEmits } from 'vue'
 
-const isOpen = ref(true)
-const emit = defineEmits(['closeAddForm'])
-const closeAddForm = () => {
-  isOpen.value = !isOpen.value
-  emit('closeAddForm', isOpen.value)
+
+const emit = defineEmits(['close'])
+const closeDialog = () => {
+  
+  emit('close')
 }
 </script>
 

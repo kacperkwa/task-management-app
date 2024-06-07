@@ -6,12 +6,10 @@
 </template>
 
 <script setup>
-import { ref, defineEmits } from 'vue'
-const isVisibe = ref(false)
-const emit = defineEmits(['showAddForm'])
+import { useDialogStore } from '@/stores/dialog'
+const store = useDialogStore()
 const showAddForm = () => {
-  isVisibe.value = true
-  emit('showAddForm', isVisibe.value)
+  store.showAddTaskForm()
 }
 </script>
 <style scoped>

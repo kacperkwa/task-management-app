@@ -1,5 +1,5 @@
 <template>
-  <base-dialog @closeAddForm="handleEvent" v-if="props.isShowAddFormVisible || closeAddForm">
+  <base-dialog @close="closeForm">
     <h2>Add New Task</h2>
     <form>
       <label for="task">Task</label>
@@ -36,20 +36,11 @@ a little."
 </template>
 
 <script setup>
-import { defineProps, ref, defineEmits } from 'vue'
-//closing the dialog
-const closeAddForm = ref(false)
-const emit = defineEmits(['closeAddForm'])
-const props = defineProps({
-  isShowAddFormVisible: {
-    type: Boolean,
-    required: true
-  }
-})
-const handleEvent = (data) => {
-  closeAddForm.value = data
-  emit('closeAddForm', data)
-}
+import { ref } from 'vue'
+import { useDialogStore } from '../../stores/dialog.js'
+
+const store = useDialogStore()
+
 //adding adidtional subtask
 const subtaskId = ref(0)
 const subtasks = ref([])
@@ -59,6 +50,9 @@ const addSubtask = () => {
 //removing subtask which is clicked
 const removeSubtask = (id) => {
   subtasks.value.splice(id, 1)
+}
+const closeForm = () => {
+  store.hideAddTaskForm()
 }
 </script>
 
