@@ -1,19 +1,32 @@
 <template>
   <section>
-    <p>This board is empty. Create a new column to get started.</p>
-    <base-button @click="showAddForm">+ Add New Column</base-button>
+    <div class="add-column" v-if="isLoggedIn">
+      <p>This board is empty. Create a new column to get started.</p>
+      <base-button @click="showAddForm">+ Add New Column</base-button>
+    </div>
+    <div class="login" v-if="!isLoggedIn">
+      <p>You are not logged in.</p>
+      <p>Please login or signup first!</p>
+      <base-button @click="showLogForm">Login now!</base-button>
+    </div>
   </section>
 </template>
 
 <script setup>
 import { useDialogStore } from '@/stores/dialog'
+import { ref } from 'vue'
+const isLoggedIn = ref(false)
 const store = useDialogStore()
 const showAddForm = () => {
   store.showAddTaskForm()
 }
+const showLogForm = () => {
+  store.showLoginForm()
+}
 </script>
 <style scoped>
-section {
+.add-column,
+.login {
   height: 100vh;
   display: flex;
   padding: 1rem;
@@ -21,7 +34,7 @@ section {
   align-items: center;
   justify-content: center;
   text-align: center;
-  gap: 3rem;
+  gap: 2rem;
   color: white;
 }
 button {
