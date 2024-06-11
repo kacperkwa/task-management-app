@@ -7,7 +7,7 @@
       <ul>
         <li class="platform-launch">Platform Launch</li>
         <li>
-          <base-button @click="showAddForm"
+          <base-button  @click="showAddForm"
             ><img src="../../assets/icons/icon-add-task-mobile.svg" alt=""
           /></base-button>
         </li>
