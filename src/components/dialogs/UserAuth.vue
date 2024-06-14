@@ -1,10 +1,12 @@
 <template>
   <base-dialog @close="closeLoginForm">
     <form @submit.prevent>
-      <h2>Login or Signup</h2>
-      <input type="text" placeholder="Username" />
-      <input type="password" placeholder="Password" />
-      <base-button class="submit-action-btn" type="submit">{{ submitBtnCaption() }}</base-button>
+      <h2>{{ submitBtnCaption() }}</h2>
+      <input type="text" placeholder="Username" v-model="userName" />
+      <input type="password" placeholder="Password" v-model="password" />
+      <base-button class="submit-action-btn" type="button" @click="submitForm">{{
+        submitBtnCaption()
+      }}</base-button>
       <p class="mode-text">{{ switchModeText() }}</p>
       <base-button class="change-action-btn" @click="changeActionMode" type="button"
         >{{ switchModeBtnCaption() }} instead!</base-button
@@ -16,6 +18,8 @@
 import { useDialogStore } from '@/stores/dialog'
 import { ref } from 'vue'
 const store = useDialogStore()
+const userName = ref('')
+const password = ref('')
 
 const actionMode = ref('login')
 const closeLoginForm = () => {
@@ -45,11 +49,15 @@ const switchModeText = () => {
     return 'Already have an account?'
   }
 }
+const submitForm = () => {
+  console.log(userName.value, password.value)
+}
 </script>
 
 <style scoped>
 h2 {
   font-size: 16px;
+  /* text-align: center; */
 }
 form {
   display: flex;
