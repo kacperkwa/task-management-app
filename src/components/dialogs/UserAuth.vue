@@ -1,12 +1,10 @@
 <template>
   <base-dialog @close="closeLoginForm">
-    <form @submit.prevent>
+    <form @submit.prevent="submitForm">
       <h2>{{ submitBtnCaption() }}</h2>
       <input type="text" placeholder="Username" v-model="userName" />
       <input type="password" placeholder="Password" v-model="password" />
-      <base-button class="submit-action-btn" type="button" @click="submitForm">{{
-        submitBtnCaption()
-      }}</base-button>
+      <base-button class="submit-action-btn">{{ submitBtnCaption() }}</base-button>
       <p class="mode-text">{{ switchModeText() }}</p>
       <base-button class="change-action-btn" @click="changeActionMode" type="button"
         >{{ switchModeBtnCaption() }} instead!</base-button
@@ -50,7 +48,11 @@ const switchModeText = () => {
   }
 }
 const submitForm = () => {
-  console.log(userName.value, password.value)
+  if (actionMode.value === 'login') {
+    console.log('Login form submitted')
+  } else {
+    console.log('Signup form submitted')
+  }
 }
 </script>
 
