@@ -1,58 +1,41 @@
 <template>
   <base-dialog @close="closeLoginForm">
     <form @submit.prevent="submitForm">
-      <h2>{{ submitBtnCaption() }}</h2>
+      <h2>{{ submitBtnCaption }}</h2>
       <input type="text" placeholder="Username" v-model="userName" />
       <input type="password" placeholder="Password" v-model="password" />
-      <base-button class="submit-action-btn">{{ submitBtnCaption() }}</base-button>
-      <p class="mode-text">{{ switchModeText() }}</p>
-      <base-button class="change-action-btn" @click="changeActionMode" type="button"
-        >{{ switchModeBtnCaption() }} instead!</base-button
-      >
+      <base-button class="submit-action-btn">{{ submitBtnCaption }}q</base-button>
+      <p class="mode-text">{{ switchModeText }}</p>
+      <base-button class="change-action-btn" @click="changeActionMode" type="button">
+        {{ switchModeBtnCaption }}instead!
+      </base-button>
     </form>
   </base-dialog>
 </template>
 <script setup>
 import { useDialogStore } from '@/stores/dialog'
-import { ref } from 'vue'
-const store = useDialogStore()
-const userName = ref('')
-const password = ref('')
+import { useAuthStore } from '@/stores/auth'
+import { ref, computed } from 'vue'
+const dialogStore = useDialogStore()
+const authStore = useAuthStore()
+const userName = ref(authStore.userName)
+const password = ref(authStore.password)
 
-const actionMode = ref('login')
 const closeLoginForm = () => {
-  store.hideLoginForm()
+  dialogStore.hideLoginForm()
 }
+
 const changeActionMode = () => {
-  actionMode.value = actionMode.value === 'login' ? 'signup' : 'login'
+  authStore.changeActionMode()
 }
-const submitBtnCaption = () => {
-  if (actionMode.value === 'login') {
-    return 'Login'
-  } else {
-    return 'Signup'
-  }
-}
-const switchModeBtnCaption = () => {
-  if (actionMode.value === 'login') {
-    return 'Signup'
-  } else {
-    return 'Login'
-  }
-}
-const switchModeText = () => {
-  if (actionMode.value === 'login') {
-    return 'Don’t have an account?'
-  } else {
-    return 'Already have an account?'
-  }
-}
+const submitBtnCaption = computed(() => authStore.submitBtnCaption)
+const switchModeBtnCaption = computed(() => authStore.switchModeBtnCaption)
+const switchModeText = computed(() => authStore.switchModeText)
 const submitForm = () => {
-  if (actionMode.value === 'login') {
-    console.log('Login form submitted')
-  } else {
-    console.log('Signup form submitted')
-  }
+  authStore.userName = userName.value
+  authStore.password = password.value
+  authStore.submitForm()
+  console.log('form submitted')
 }
 </script>
 

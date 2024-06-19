@@ -16,12 +16,12 @@
 import { useDialogStore } from '@/stores/dialog'
 import { ref } from 'vue'
 const isLoggedIn = ref(false)
-const store = useDialogStore()
+const dialogStore = useDialogStore()
 const showAddForm = () => {
-  store.showAddTaskForm()
+  dialogStore.showAddTaskForm()
 }
 const showLogForm = () => {
-  store.showLoginForm()
+  dialogStore.showLoginForm()
 }
 </script>
 <style scoped>
