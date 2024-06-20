@@ -1,33 +1,17 @@
 import { defineStore } from 'pinia'
-export const useAuthStore = defineStore('main', {
+export const useAuthStore = defineStore('auth', {
   state: () => ({
-    userName: '',
-    password: '',
-    formIsValid: true,
-    actionMode: 'login'
+    name: '',
+    password: ''
   }),
-  getters: {
-    submitBtnCaption(state) {
-      return state.actionMode === 'login' ? 'Login' : 'Signup'
-    },
-    switchModeBtnCaption(state) {
-      return state.actionMode === 'login' ? 'Signup' : 'Login'
-    },
-    switchModeText(state) {
-      return state.actionMode === 'login' ? 'Don’t have an account?' : 'Already have an account?'
-    }
-  },
   actions: {
-    changeActionMode() {
-      this.actionMode = this.actionMode === 'login' ? 'signup' : 'login'
+    login(userName, userPassword) {
+      this.name = userName
+      this.password = userPassword
+      console.log(this.name, this.password)
     },
-    async submitForm() {
-      if (this.userName === '' || this.password.length < 6) {
-        this.formIsValid = false
-        console.log('Form is not valid')
-        return
-      }
-      this.formIsValid = true
+    signup() {
+      console.log('signup')
     }
   }
 })
