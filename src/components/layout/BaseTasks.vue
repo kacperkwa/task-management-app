@@ -29,7 +29,6 @@ section {
   justify-content: center;
   align-items: flex-start;
   gap: 1rem;
-  cursor: pointer;
 }
 .task-category {
   display: flex;
@@ -49,5 +48,7 @@ ul {
   gap: 1rem;
   padding: 0;
   margin: 0;
+  
 }
+
 </style>

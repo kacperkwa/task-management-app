@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 
-export const useDialogStore = defineStore('main', {
+export const useDialogStore = defineStore('dialog', {
   state: () => ({
     isAddTaskFormVisible: false,
     isLogginFormVisible: false

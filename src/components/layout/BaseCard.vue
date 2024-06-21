@@ -1,9 +1,26 @@
 <template>
   <div class="base-card">
-    <h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</h3>
-    <p>0 of 1 subtask</p>
+    <h3>{{ props.taskTitle }}</h3>
+    <p>{{ props.doneSubtasks }} of {{ props.allSubtasks }} subtask</p>
   </div>
 </template>
+<script setup>
+import { defineProps } from 'vue'
+const props = defineProps({
+  taskTitle: {
+    type: String,
+    required: true
+  },
+  doneSubtasks: {
+    type: Number,
+    default: 0
+  },
+  allSubtasks: {
+    type: Number,
+    default: 0
+  }
+})
+</script>
 
 <style scoped>
 .base-card {

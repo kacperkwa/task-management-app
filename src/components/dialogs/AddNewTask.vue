@@ -1,15 +1,16 @@
 <template>
   <base-dialog @close="closeForm">
     <h2>Add New Task</h2>
-    <form>
+    <form @submit.prevent="submitForm">
       <label for="task">Task</label>
-      <input type="text" id="task" placeholder="e.g take coffee break" />
+      <input type="text" id="task" placeholder="e.g take coffee break" v-model="taskTitle" />
       <label for="description">Description</label>
       <textarea
         id="description"
         placeholder="e.g. It’s always good to take a break. This 
 15 minute break will  recharge the batteries 
 a little."
+        v-model="taskDescription"
       ></textarea>
       <label for="subtasks">Subtasks</label>
       <div v-for="(subtask, index) in subtasks" :key="index" class="subtask">
@@ -25,7 +26,7 @@ a little."
       </div>
       <base-button class="add-subtask" type="button" @click="addSubtask">+ Add Subtask</base-button>
       <label for="status">Status</label>
-      <select id="status">
+      <select id="status" v-model="status">
         <option value="todo">Todo</option>
         <option value="in-progress">Doing</option>
         <option value="done">Done</option>
@@ -39,11 +40,25 @@ a little."
 import { Guid } from 'js-guid'
 import { ref } from 'vue'
 import { useDialogStore } from '../../stores/dialog.js'
-
 const store = useDialogStore()
-
-
 const subtasks = ref([])
+const taskTitle = ref('')
+const taskDescription = ref('')
+const todoTasks = []
+const status = ref('todo')
+
+const submitForm = () => {
+  const newTask = {
+    title: taskTitle.value,
+    description: taskDescription.value,
+    subtasks: subtasks.value.map((subtask) => subtask.text),
+    status: status.value
+  }
+  todoTasks.push(newTask)
+  console.log(newTask)
+  console.log(todoTasks)
+  store.hideAddTaskForm()
+}
 const addSubtask = () => {
   subtasks.value.push({ id: Guid.newGuid().toString(), text: '' })
 }
