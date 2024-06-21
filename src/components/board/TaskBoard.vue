@@ -58,26 +58,4 @@ main {
   padding-top: 80px;
   color: white;
 }
-.todo,
-.doing,
-.done {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 1rem;
-  cursor: pointer;
-}
-.task-category {
-  display: flex;
-  text-align: center;
-  justify-content: center;
-  gap: 0.5rem;
-  align-self: flex-start;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 2.4px;
-  color: #8a8d9d;
-  padding: 0.5rem;
-}
 </style>
