@@ -92,6 +92,7 @@ textarea {
 .delete-subtask-btn {
   background-color: transparent;
   border: none;
+  cursor: pointer;
 }
 .subtask {
   display: flex;

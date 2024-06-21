@@ -89,4 +89,8 @@ input:focus {
   text-align: center;
   letter-spacing: 1.2px;
 }
+.change-action-btn {
+  background-color: white;
+  color: #635fc7;
+}
 </style>

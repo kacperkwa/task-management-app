@@ -18,7 +18,7 @@ import TaskBoard from './components/board/TaskBoard.vue'
 
 const store = useDialogStore()
 
-const isEmpty = true
+const isEmpty = false
 </script>
 <style>
 .app {
