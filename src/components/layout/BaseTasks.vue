@@ -5,7 +5,7 @@
       {{ props.category }} ({{ props.tasks.length }})
     </p>
     <ul>
-      <slot></slot>
+      <slot name="list-of-tasks"></slot>
     </ul>
   </section>
 </template>
@@ -42,5 +42,12 @@ section {
   letter-spacing: 2.4px;
   color: #8a8d9d;
   padding: 0.5rem;
+}
+ul {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 0;
+  margin: 0;
 }
 </style>
