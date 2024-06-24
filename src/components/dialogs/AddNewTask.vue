@@ -28,7 +28,7 @@ a little."
       <label for="status">Status</label>
       <select id="status" v-model="status">
         <option value="todo">Todo</option>
-        <option value="in-progress">Doing</option>
+        <option value="doing">Doing</option>
         <option value="done">Done</option>
       </select>
       <base-button type="submit">Create Task</base-button>
@@ -40,11 +40,13 @@ a little."
 import { Guid } from 'js-guid'
 import { ref } from 'vue'
 import { useDialogStore } from '../../stores/dialog.js'
+import { useTasksStore } from '../../stores/tasks.js'
 const store = useDialogStore()
+const taskStore = useTasksStore()
 const subtasks = ref([])
 const taskTitle = ref('')
 const taskDescription = ref('')
-const todoTasks = []
+const todoTasks = ref([])
 const status = ref('todo')
 
 const submitForm = () => {
@@ -54,10 +56,15 @@ const submitForm = () => {
     subtasks: subtasks.value.map((subtask) => subtask.text),
     status: status.value
   }
-  todoTasks.push(newTask)
-  console.log(newTask)
-  console.log(todoTasks)
-  store.hideAddTaskForm()
+  todoTasks.value.push(newTask)
+  taskStore.addTask(newTask)
+  store.hideAddTaskForm(), clearForm()
+}
+const clearForm = () => {
+  taskTitle.value = ''
+  taskDescription.value = ''
+  subtasks.value = []
+  status.value = 'todo'
 }
 const addSubtask = () => {
   subtasks.value.push({ id: Guid.newGuid().toString(), text: '' })

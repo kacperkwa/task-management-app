@@ -8,8 +8,16 @@ export const useTasksStore = defineStore('tasks', {
   }),
   actions: {
     async addTask(task) {
+      let category = ''
+      if (task.status === 'todo') {
+        category = 'todoTasks'
+      } else if (task.status === 'doing') {
+        category = 'doingTasks'
+      } else {
+        category = 'completedTasks'
+      }
       const response = await fetch(
-        'https://management-app-d13cd-default-rtdb.europe-west1.firebasedatabase.app/tasks.json',
+        `https://management-app-d13cd-default-rtdb.europe-west1.firebasedatabase.app/tasks/${category}.json`,
         { method: 'POST', body: JSON.stringify(task) }
       )
       const responseData = await response.json()
