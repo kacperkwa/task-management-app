@@ -53,7 +53,10 @@ const submitForm = () => {
   const newTask = {
     title: taskTitle.value,
     description: taskDescription.value,
-    subtasks: subtasks.value.map((subtask) => subtask.text),
+    subtasks: subtasks.value.map((subtask) => ({
+      text: subtask.text,
+      isCompleted: subtask.isCompleted
+    })),
     status: status.value
   }
   todoTasks.value.push(newTask)
@@ -67,7 +70,7 @@ const clearForm = () => {
   status.value = 'todo'
 }
 const addSubtask = () => {
-  subtasks.value.push({ id: Guid.newGuid().toString(), text: '' })
+  subtasks.value.push({ id: Guid.newGuid().toString(), text: '', isCompleted: false })
 }
 
 const removeSubtask = (index) => {

@@ -1,12 +1,14 @@
 <template>
   <main>
     <todo-tasks></todo-tasks>
+    <doing-tasks></doing-tasks>
+    <done-tasks></done-tasks>
   </main>
 </template>
 <script setup>
 import TodoTasks from '../tasks/TodoTasks.vue'
-// import DoingTasks from '../tasks/DoingTasks.vue'
-// import DoneTasks from '../tasks/DoneTasks.vue'
+import DoingTasks from '../tasks/DoingTasks.vue'
+import DoneTasks from '../tasks/DoneTasks.vue'
 </script>
 
 <style scoped>

@@ -1,5 +1,5 @@
 <template>
-  <base-tasks category="TODO">
+  <base-tasks v-if="tasks.length > 0" category="TODO" :tasks="tasks">
     <template #icon>
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -12,27 +12,27 @@
       </svg>
     </template>
     <template #list-of-tasks>
-      <li v-for="task in todoTaks" :key="task.id">
+      <li v-for="task in tasks" :key="task.id">
         <base-card
           :task-title="task.title"
-          :done-subtasks="task.doneSubtasks"
-          :all-subtasks="task.allSubtasks"
+          :done-subtasks="task.subtasks.filter((subtask) => subtask.isCompleted).length"
+          :all-subtasks="task.subtasks.length"
         ></base-card>
       </li>
     </template>
   </base-tasks>
 </template>
 <script setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
+import { useTasksStore } from '@/stores/tasks'
 import BaseTasks from '../layout/BaseTasks.vue'
 import BaseCard from '../layout/BaseCard.vue'
 
-const todoTaks = ref([
-  { id: 1, title: 'Task 1', doneSubtasks: 2, allSubtasks: 3 },
-  { id: 2, title: 'Task 2', doneSubtasks: 0, allSubtasks: 1 },
-  { id: 3, title: 'Task 3', doneSubtasks: 1, allSubtasks: 2 },
-  { id: 4, title: 'Task 4', doneSubtasks: 3, allSubtasks: 3 },
-  { id: 5, title: 'Task 5', doneSubtasks: 0, allSubtasks: 1 },
-  { id: 5, title: 'Task 5', doneSubtasks: 0, allSubtasks: 1 }
-])
+const taskStore = useTasksStore()
+const tasks = ref([])
+
+onMounted(async () => {
+  await taskStore.fetchTasks('todoTasks')
+  tasks.value = taskStore.todoTasks
+})
 </script>
