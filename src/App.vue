@@ -5,6 +5,7 @@
     <task-board v-if="!isEmpty"></task-board>
     <add-new-task v-if="store.isAddTaskFormVisible"></add-new-task>
     <user-auth v-if="store.isLogginFormVisible"></user-auth>
+    <task-details></task-details>
   </div>
 </template>
 <script setup>
@@ -15,6 +16,7 @@ import TheHeader from './components/layout/TheHeader.vue'
 import EmptyBoard from './components/board/EmptyBoard.vue'
 import AddNewTask from './components/dialogs/AddNewTask.vue'
 import TaskBoard from './components/board/TaskBoard.vue'
+import TaskDetails from './components/dialogs/TaskDetails.vue'
 
 const store = useDialogStore()
 

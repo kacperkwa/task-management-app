@@ -38,7 +38,7 @@ const closeDialog = () => {
   max-width: 480px;
   color: white;
   background-color: #2b2c37;
-  padding: 1rem;
+  padding: 1.2rem;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }

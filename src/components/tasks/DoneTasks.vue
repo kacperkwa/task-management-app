@@ -13,7 +13,7 @@
     </template>
     <template #list-of-tasks>
       <li v-for="task in tasks" :key="task.id">
-        <base-card
+        <base-card @click="openTaskDetails(task.id)"
           :task-title="task.title"
           :done-subtasks="task.subtasks.filter((subtask) => subtask.isCompleted).length"
           :all-subtasks="task.subtasks.length"
@@ -30,6 +30,9 @@ import BaseCard from '../layout/BaseCard.vue'
 
 const taskStore = useTasksStore()
 const tasks = ref([])
+const openTaskDetails = (taskId) => {
+  taskStore.openTaskDetails(taskId)
+}
 
 onMounted(async () => {
   await taskStore.fetchTasks('completedTasks')

@@ -33,6 +33,7 @@ const props = defineProps({
   box-shadow: 0px 4px 6px 0px rgba(54, 78, 126, 0.1);
   border-radius: 8px;
   flex-shrink: 0;
+  cursor: pointer;
 }
 h3 {
   font-size: 15px;
