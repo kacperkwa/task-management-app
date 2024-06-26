@@ -4,7 +4,7 @@ export const useTasksStore = defineStore('tasks', {
   state: () => ({
     todoTasks: [],
     doingTasks: [],
-    completedTasks: []
+    doneTasks: []
   }),
   actions: {
     async addTask(task) {
@@ -14,7 +14,7 @@ export const useTasksStore = defineStore('tasks', {
       } else if (task.status === 'doing') {
         category = 'doingTasks'
       } else {
-        category = 'completedTasks'
+        category = 'doneTasks'
       }
       const response = await fetch(
         `https://management-app-d13cd-default-rtdb.europe-west1.firebasedatabase.app/tasks/${category}.json`,
@@ -45,8 +45,8 @@ export const useTasksStore = defineStore('tasks', {
           this.todoTasks = tasks
         } else if (category === 'doingTasks') {
           this.doingTasks = tasks
-        } else if (category === 'completedTasks') {
-          this.completedTasks = tasks
+        } else if (category === 'doneTasks') {
+          this.doneTasks = tasks
         }
       }
     }

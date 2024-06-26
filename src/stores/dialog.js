@@ -3,7 +3,8 @@ import { defineStore } from 'pinia'
 export const useDialogStore = defineStore('dialog', {
   state: () => ({
     isAddTaskFormVisible: false,
-    isLogginFormVisible: false
+    isLogginFormVisible: false,
+    isTaskClicked: false
   }),
   actions: {
     showAddTaskForm() {
@@ -17,6 +18,13 @@ export const useDialogStore = defineStore('dialog', {
     },
     hideLoginForm() {
       this.isLogginFormVisible = false
+    },
+    showTaskDetails() {
+      this.isTaskClicked = true
+      console.log('asd')
+    },
+    hideTaskDetails() {
+      this.isTaskClicked = false
     }
   }
 })

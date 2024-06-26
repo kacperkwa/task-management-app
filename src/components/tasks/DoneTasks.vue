@@ -1,5 +1,5 @@
 <template>
-  <base-tasks v-if="tasks.length > 0" category="DONE" :tasks="tasks">
+  <base-tasks v-if="props.tasks.length > 0" category="DONE" :tasks="tasks">
     <template #icon>
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -12,8 +12,8 @@
       </svg>
     </template>
     <template #list-of-tasks>
-      <li v-for="task in tasks" :key="task.id">
-        <base-card @click="openTaskDetails(task.id)"
+      <li v-for="task in props.tasks" :key="task.id" @click="showDetails">
+        <base-card
           :task-title="task.title"
           :done-subtasks="task.subtasks.filter((subtask) => subtask.isCompleted).length"
           :all-subtasks="task.subtasks.length"
@@ -23,19 +23,8 @@
   </base-tasks>
 </template>
 <script setup>
-import { onMounted, ref } from 'vue'
-import { useTasksStore } from '@/stores/tasks'
 import BaseTasks from '../layout/BaseTasks.vue'
 import BaseCard from '../layout/BaseCard.vue'
-
-const taskStore = useTasksStore()
-const tasks = ref([])
-const openTaskDetails = (taskId) => {
-  taskStore.openTaskDetails(taskId)
-}
-
-onMounted(async () => {
-  await taskStore.fetchTasks('completedTasks')
-  tasks.value = taskStore.completedTasks
-})
+import { defineProps } from 'vue'
+const props = defineProps(['tasks'])
 </script>
