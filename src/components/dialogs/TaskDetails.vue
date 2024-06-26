@@ -2,9 +2,7 @@
   <base-dialog>
     <div class="container">
       <div class="title-section">
-        <h3>
-          {{ taskTitle }} Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut ex, error,
-        </h3>
+        <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut ex, error,</h3>
         <button class="options-btn">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -41,6 +39,14 @@
           </li>
         </ul>
       </div>
+      <div class="status">
+        <label for="status">Current Status</label>
+        <select id="status">
+          <option value="todo">Todo</option>
+          <option value="doing">Doing</option>
+          <option value="done">Done</option>
+        </select>
+      </div>
     </div>
   </base-dialog>
 </template>
@@ -64,7 +70,7 @@ h3 {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  gap: 2rem;
+  gap: 1rem;
 }
 .options-btn {
   background-color: transparent;
@@ -76,5 +82,38 @@ h3 {
   font-size: 14px;
   color: #828fa3;
   line-height: 23px;
+}
+.subtasks {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.subtasks h3 {
+  font-size: 12px;
+}
+.subtasks li {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  margin-bottom: 0.5rem;
+  border-radius: 4px;
+  background-color: #20212c;
+  font-size: 12px;
+}
+select {
+  padding: 0.5rem;
+  font-size: 13px;
+  background-color: #2b2c37;
+  border-radius: 4px;
+  border: 1px solid rgba(130, 143, 163, 0.25);
+  color: white;
+}
+.status {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+  font-size: 12px;
 }
 </style>
