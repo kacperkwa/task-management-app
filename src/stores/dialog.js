@@ -4,7 +4,8 @@ export const useDialogStore = defineStore('dialog', {
   state: () => ({
     isAddTaskFormVisible: false,
     isLogginFormVisible: false,
-    isTaskClicked: false
+    isTaskDialogVisible: false,
+    dialogTask: null
   }),
   actions: {
     showAddTaskForm() {
@@ -19,12 +20,13 @@ export const useDialogStore = defineStore('dialog', {
     hideLoginForm() {
       this.isLogginFormVisible = false
     },
-    showTaskDetails() {
-      this.isTaskClicked = true
-      console.log('asd')
+    showTaskDetails(task) {
+      this.isTaskDialogVisible = true
+      this.dialogTask = task
     },
     hideTaskDetails() {
-      this.isTaskClicked = false
+      this.isTaskDialogVisible = false
+      this.dialogTask = null
     }
   }
 })

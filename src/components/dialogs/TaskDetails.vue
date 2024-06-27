@@ -1,5 +1,5 @@
 <template>
-  <base-dialog>
+  <base-dialog @close="dialogStore.hideTaskDetails">
     <div class="container">
       <div class="title-section">
         <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut ex, error,</h3>
@@ -53,6 +53,8 @@
 
 <script setup>
 import BaseDialog from '../layout/BaseDialog.vue'
+import { useDialogStore } from '@/stores/dialog'
+const dialogStore = useDialogStore()
 </script>
 <style scoped>
 h3 {

@@ -12,7 +12,7 @@
       </svg>
     </template>
     <template #list-of-tasks>
-      <li v-for="task in props.tasks" :key="task.id" @click="showDetails">
+      <li v-for="task in props.tasks" :key="task.id" @click="showDetails(task)">
         <base-card
           :task-title="task.title"
           :done-subtasks="task.subtasks.filter((subtask) => subtask.isCompleted).length"
@@ -25,6 +25,11 @@
 <script setup>
 import BaseTasks from '../layout/BaseTasks.vue'
 import BaseCard from '../layout/BaseCard.vue'
+
+const emit = defineEmits(['showDetails'])
+const showDetails = (task) => {
+  emit('showDetails', task)
+}
 import { defineProps } from 'vue'
 const props = defineProps(['tasks', 'color', 'category'])
 </script>
