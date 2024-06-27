@@ -1,5 +1,5 @@
 <template>
-  <base-tasks v-if="props.tasks.length > 0" category="DONE" :tasks="tasks">
+  <base-tasks v-if="props.tasks.length > 0" :category="category" :tasks="tasks">
     <template #icon>
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -8,7 +8,7 @@
         viewBox="0 0 15 15"
         fill="none"
       >
-        <circle cx="7.5" cy="7.5" r="7.5" fill="#67E2AE" />
+        <circle cx="7.5" cy="7.5" r="7.5" :fill="color" />
       </svg>
     </template>
     <template #list-of-tasks>
@@ -26,5 +26,5 @@
 import BaseTasks from '../layout/BaseTasks.vue'
 import BaseCard from '../layout/BaseCard.vue'
 import { defineProps } from 'vue'
-const props = defineProps(['tasks'])
+const props = defineProps(['tasks', 'color', 'category'])
 </script>

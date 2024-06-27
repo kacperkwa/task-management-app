@@ -1,8 +1,9 @@
 <template>
   <main>
-    <todo-tasks :tasks="todoTasksArr"></todo-tasks>
-    <doing-tasks :tasks="doingTasksArr"></doing-tasks>
-    <done-tasks :tasks="doneTasksArr"></done-tasks>
+    <tasks-list :tasks="todoTasksArr" :category="'TODO'" :color="'#49C4E5'"></tasks-list>
+    <tasks-list :tasks="doingTasksArr" :category="'DOING'" :color="'#8471F2'"></tasks-list>
+    <tasks-list :tasks="doneTasksArr" :category="'DONE'" :color="'#67E2AE'"></tasks-list>
+
     <task-details v-if="isClicked"></task-details>
   </main>
 </template>
@@ -10,9 +11,7 @@
 import { onMounted, ref } from 'vue'
 import { useTasksStore } from '@/stores/tasks'
 import TaskDetails from '../dialogs/TaskDetails.vue'
-import TodoTasks from '../tasks/TodoTasks.vue'
-import DoingTasks from '../tasks/DoingTasks.vue'
-import DoneTasks from '../tasks/DoneTasks.vue'
+import TasksList from '../tasks/TasksList.vue'
 
 const isClicked = ref(false)
 const taskStore = useTasksStore()

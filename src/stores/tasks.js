@@ -13,7 +13,7 @@ export const useTasksStore = defineStore('tasks', {
         category = 'todoTasks'
       } else if (task.status === 'doing') {
         category = 'doingTasks'
-      } else {
+      } else if (task.status === 'done') {
         category = 'doneTasks'
       }
       const response = await fetch(
