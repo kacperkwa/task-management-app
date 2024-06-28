@@ -1,7 +1,8 @@
 <template>
   <div class="base-card">
     <h3>{{ props.taskTitle }}</h3>
-    <p>{{ props.doneSubtasks }} of {{ props.allSubtasks }} subtask</p>
+    <p v-if="props.allSubtasks > 0">{{ props.doneSubtasks }} of {{ props.allSubtasks }} subtask</p>
+    <p v-else>You don't have any subtasks to do.</p>
   </div>
 </template>
 <script setup>

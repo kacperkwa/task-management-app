@@ -2,28 +2,32 @@
   <main>
     <tasks-list
       @show-details="handleShowDetails"
-      :tasks="todoTasksArr"
+      :tasks="taskStore.todoTasks"
       :category="'TODO'"
       :color="'#49C4E5'"
     ></tasks-list>
     <tasks-list
       @show-details="handleShowDetails"
-      :tasks="doingTasksArr"
+      :tasks="taskStore.doingTasks"
       :category="'DOING'"
       :color="'#8471F2'"
     ></tasks-list>
     <tasks-list
       @show-details="handleShowDetails"
-      :tasks="doneTasksArr"
+      :tasks="taskStore.doneTasks"
       :category="'DONE'"
       :color="'#67E2AE'"
     ></tasks-list>
 
-    <task-details v-if="dialogStore.isTaskDialogVisible"></task-details>
+    <task-details
+      :task="dialogStore.dialogTask"
+      :subtasks="dialogStore.dialogTask.subtasks.length === 0"
+      v-if="dialogStore.isTaskDialogVisible"
+    ></task-details>
   </main>
 </template>
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted } from 'vue'
 import { useTasksStore } from '@/stores/tasks'
 import { useDialogStore } from '@/stores/dialog'
 import TaskDetails from '../dialogs/TaskDetails.vue'
@@ -31,9 +35,6 @@ import TasksList from '../tasks/TasksList.vue'
 
 const taskStore = useTasksStore()
 const dialogStore = useDialogStore()
-const todoTasksArr = ref([])
-const doingTasksArr = ref([])
-const doneTasksArr = ref([])
 const handleShowDetails = (task) => {
   dialogStore.showTaskDetails(task)
 }
@@ -42,10 +43,6 @@ onMounted(async () => {
   await taskStore.fetchTasks('todoTasks')
   await taskStore.fetchTasks('doingTasks')
   await taskStore.fetchTasks('doneTasks')
-
-  todoTasksArr.value = taskStore.todoTasks
-  doingTasksArr.value = taskStore.doingTasks
-  doneTasksArr.value = taskStore.doneTasks
 })
 </script>
 

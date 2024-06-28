@@ -46,10 +46,10 @@ const taskStore = useTasksStore()
 const subtasks = ref([])
 const taskTitle = ref('')
 const taskDescription = ref('')
-const todoTasks = ref([])
+
 const status = ref('todo')
 
-const submitForm = () => {
+const submitForm = async () => {
   const newTask = {
     title: taskTitle.value,
     description: taskDescription.value,
@@ -59,8 +59,8 @@ const submitForm = () => {
     })),
     status: status.value
   }
-  todoTasks.value.push(newTask)
-  taskStore.addTask(newTask)
+
+  await taskStore.addTask(newTask)
   store.hideAddTaskForm(), clearForm()
 }
 const clearForm = () => {

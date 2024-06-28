@@ -2,7 +2,7 @@
   <base-dialog @close="dialogStore.hideTaskDetails">
     <div class="container">
       <div class="title-section">
-        <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut ex, error,</h3>
+        <h3>{{ props.task.title }}</h3>
         <button class="options-btn">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -19,23 +19,15 @@
       </div>
 
       <p class="description">
-        We know what we're planning to build for version one. Now we need to finalise the first
-        pricing model we'll use. Keep iterating the subtasks until we have a coherent proposition.
+        {{ props.task.description }}
       </p>
       <div class="subtasks">
         <h3>Subtasks</h3>
+        <p v-if="props.subtasks">Edit your task to add subtask.</p>
         <ul>
-          <li>
-            <input type="checkbox" id="subtask1" name="subtask1" />
-            <label for="subtask1">Create a pricing model</label>
-          </li>
-          <li>
-            <input type="checkbox" id="subtask2" name="subtask2" />
-            <label for="subtask2">Create a pricing model</label>
-          </li>
-          <li>
-            <input type="checkbox" id="subtask3" name="subtask3" />
-            <label for="subtask3">Create a pricing model</label>
+          <li v-for="(subtask, index) in task.subtasks" :key="index">
+            <input type="checkbox" :id="'subtask' + index" :checked="subtask.isCompleted" />
+            <label :for="'subtask' + index">{{ subtask.text }}</label>
           </li>
         </ul>
       </div>
@@ -55,6 +47,7 @@
 import BaseDialog from '../layout/BaseDialog.vue'
 import { useDialogStore } from '@/stores/dialog'
 const dialogStore = useDialogStore()
+const props = defineProps(['task', 'subtasks'])
 </script>
 <style scoped>
 h3 {
@@ -66,6 +59,7 @@ h3 {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
 }
 .container {
   display: flex;
@@ -117,5 +111,10 @@ select {
   gap: 0.5rem;
   width: 100%;
   font-size: 12px;
+}
+.subtasks p {
+  font-size: 14px;
+  color: #828fa3;
+  line-height: 23px;
 }
 </style>

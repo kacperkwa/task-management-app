@@ -20,8 +20,8 @@ export const useTasksStore = defineStore('tasks', {
         `https://management-app-d13cd-default-rtdb.europe-west1.firebasedatabase.app/tasks/${category}.json`,
         { method: 'POST', body: JSON.stringify(task) }
       )
-      const responseData = await response.json()
-      console.log(responseData)
+      const responseData = await response.json() // eslint-disable-line
+      await this.fetchTasks(category)
     },
     removeTask(task) {
       this.todoTasks = this.todoTasks.filter((t) => t !== task)
@@ -33,12 +33,13 @@ export const useTasksStore = defineStore('tasks', {
       )
       const responseData = await response.json()
       const tasks = []
+
       for (const key in responseData) {
         tasks.push({
           id: key,
           title: responseData[key].title,
-          description: responseData[key].description,
-          subtasks: responseData[key].subtasks,
+          description: responseData[key].description || '',
+          subtasks: responseData[key].subtasks || [],
           status: responseData[key].status
         })
         if (category === 'todoTasks') {
