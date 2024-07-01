@@ -23,8 +23,16 @@ export const useTasksStore = defineStore('tasks', {
       const responseData = await response.json() // eslint-disable-line
       await this.fetchTasks(category)
     },
-    removeTask(task) {
-      this.todoTasks = this.todoTasks.filter((t) => t !== task)
+    async removeTaskFromCategory(task) {
+      const category = this.getCategoryByStatus(task.status)
+      const taskIndex = this[category].findIndex((t) => t.id === task.id)
+      if (taskIndex !== -1) {
+        this[category].splice(taskIndex, 1)
+        await fetch(
+          `https://management-app-d13cd-default-rtdb.europe-west1.firebasedatabase.app/tasks/${category}/${task.id}.json`,
+          { method: 'DELETE' }
+        )
+      }
     },
 
     async fetchTasks(category) {
@@ -42,13 +50,52 @@ export const useTasksStore = defineStore('tasks', {
           subtasks: responseData[key].subtasks || [],
           status: responseData[key].status
         })
-        if (category === 'todoTasks') {
-          this.todoTasks = tasks
-        } else if (category === 'doingTasks') {
-          this.doingTasks = tasks
-        } else if (category === 'doneTasks') {
-          this.doneTasks = tasks
-        }
+        this[category] = tasks
+      }
+    },
+    async updateSubtask(taskId, updateSubtask) {
+      const task = this.findTaskById(taskId)
+      if (task) {
+        task.subtask = updateSubtask
+        await this.updateTask(taskId, task)
+      }
+    },
+    async updateTaskStatus(taskId, newStatus) {
+      const task = this.findTaskById(taskId)
+      if (task) {
+        const newCategory = this.getCategoryByStatus(newStatus)
+
+        task.status = newStatus
+        console.log(task.status)
+        // Remove from old category
+        this.removeTaskFromCategory(task)
+
+        // Add to new category
+        this[newCategory].push(task)
+
+        // Update in the database
+        await this.updateTask(taskId, task)
+      }
+    },
+    async updateTask(taskId, updatedTask) {
+      const category = this.getCategoryByStatus(updatedTask.status)
+      await fetch(
+        `https://management-app-d13cd-default-rtdb.europe-west1.firebasedatabase.app/tasks/${category}/${taskId}.json`,
+        { method: 'PATCH', body: JSON.stringify(updatedTask) }
+      )
+    },
+    findTaskById(taskId) {
+      return [...this.todoTasks, ...this.doingTasks, ...this.doneTasks].find(
+        (task) => task.id === taskId
+      )
+    },
+    getCategoryByStatus(status) {
+      if (status === 'todo') {
+        return 'todoTasks'
+      } else if (status === 'doing') {
+        return 'doingTasks'
+      } else if (status === 'done') {
+        return 'doneTasks'
       }
     }
   }

@@ -26,14 +26,21 @@
         <p v-if="props.subtasks">Edit your task to add subtask.</p>
         <ul>
           <li v-for="(subtask, index) in task.subtasks" :key="index">
-            <input type="checkbox" :id="'subtask' + index" :checked="subtask.isCompleted" />
-            <label :for="'subtask' + index">{{ subtask.text }}</label>
+            <input
+              type="checkbox"
+              :id="'subtask' + index"
+              v-model="subtask.isCompleted"
+              @change="saveSubtaskChanges(subtask, index)"
+            />
+            <label :class="{ completed: subtask.isCompleted }" :for="'subtask' + index">{{
+              subtask.text
+            }}</label>
           </li>
         </ul>
       </div>
       <div class="status">
         <label for="status">Current Status</label>
-        <select id="status">
+        <select id="status" v-model="task.status" @change="saveTaskStatus">
           <option value="todo">Todo</option>
           <option value="doing">Doing</option>
           <option value="done">Done</option>
@@ -46,10 +53,27 @@
 <script setup>
 import BaseDialog from '../layout/BaseDialog.vue'
 import { useDialogStore } from '@/stores/dialog'
+import { toRefs, defineProps } from 'vue'
+import { useTasksStore } from '@/stores/tasks'
+
 const dialogStore = useDialogStore()
+const taskStore = useTasksStore()
 const props = defineProps(['task', 'subtasks'])
+const { task } = toRefs(props)
+const saveSubtaskChanges = async (subtask, index) => {
+  const updatedSubtask = [...task.value.subtasks]
+  updatedSubtask[index] = { ...subtask, isCompleted: !subtask.isCompleted }
+  await taskStore.updateSubtask(task.value.id, updatedSubtask)
+}
+const saveTaskStatus = async () => {
+  await taskStore.updateTaskStatus(task.value.id, task.value.status)
+}
 </script>
 <style scoped>
+.completed {
+  text-decoration: line-through;
+  color: #828fa3;
+}
 h3 {
   font-size: 18px;
   font-weight: 700;
