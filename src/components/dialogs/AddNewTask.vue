@@ -48,9 +48,10 @@ const taskTitle = ref('')
 const taskDescription = ref('')
 
 const status = ref('todo')
-
+const categories = ['todoTasks', 'doingTasks', 'doneTasks']
 const submitForm = async () => {
   const newTask = {
+    id: Guid.newGuid().toString(),
     title: taskTitle.value,
     description: taskDescription.value,
     subtasks: subtasks.value.map((subtask) => ({
@@ -61,6 +62,9 @@ const submitForm = async () => {
   }
 
   await taskStore.addTask(newTask)
+  categories.forEach(async (category) => {
+    await taskStore.fetchTasks(category)
+  })
   store.hideAddTaskForm(), clearForm()
 }
 const clearForm = () => {

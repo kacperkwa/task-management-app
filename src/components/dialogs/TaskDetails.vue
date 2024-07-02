@@ -60,10 +60,13 @@ const dialogStore = useDialogStore()
 const taskStore = useTasksStore()
 const props = defineProps(['task', 'subtasks'])
 const { task } = toRefs(props)
+// const saveSubtaskChanges = async (subtask, index) => {
+//   const updatedSubtask = [...task.value.subtasks]
+//   updatedSubtask[index] = { ...subtask, isCompleted: !subtask.isCompleted }
+//   await taskStore.updateSubtask(task.value.id, updatedSubtask)
+// }
 const saveSubtaskChanges = async (subtask, index) => {
-  const updatedSubtask = [...task.value.subtasks]
-  updatedSubtask[index] = { ...subtask, isCompleted: !subtask.isCompleted }
-  await taskStore.updateSubtask(task.value.id, updatedSubtask)
+  await taskStore.updateSubtask(task.value.id, index, subtask.isCompleted)
 }
 const saveTaskStatus = async () => {
   await taskStore.updateTaskStatus(task.value.id, task.value.status)
