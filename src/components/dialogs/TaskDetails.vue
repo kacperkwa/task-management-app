@@ -30,7 +30,7 @@
               type="checkbox"
               :id="'subtask' + index"
               v-model="subtask.isCompleted"
-              @change="saveSubtaskChanges(subtask, index)"
+              @change="subtaskChange(index)"
             />
             <label :class="{ completed: subtask.isCompleted }" :for="'subtask' + index">{{
               subtask.text
@@ -40,7 +40,7 @@
       </div>
       <div class="status">
         <label for="status">Current Status</label>
-        <select id="status" v-model="task.status" @change="saveTaskStatus">
+        <select id="status" v-model="task.status">
           <option value="todo">Todo</option>
           <option value="doing">Doing</option>
           <option value="done">Done</option>
@@ -60,16 +60,11 @@ const dialogStore = useDialogStore()
 const taskStore = useTasksStore()
 const props = defineProps(['task', 'subtasks'])
 const { task } = toRefs(props)
-// const saveSubtaskChanges = async (subtask, index) => {
-//   const updatedSubtask = [...task.value.subtasks]
-//   updatedSubtask[index] = { ...subtask, isCompleted: !subtask.isCompleted }
-//   await taskStore.updateSubtask(task.value.id, updatedSubtask)
-// }
-const saveSubtaskChanges = async (subtask, index) => {
-  await taskStore.updateSubtask(task.value.id, index, subtask.isCompleted)
-}
-const saveTaskStatus = async () => {
-  await taskStore.updateTaskStatus(task.value.id, task.value.status)
+const subtaskChange = (index) => {
+  const subtaskIsCompleted = task.value.subtasks[index].isCompleted
+  const taskId = task.value.id
+  console.log(taskId, subtaskIsCompleted)
+  taskStore.saveSubtaskChange(taskId, subtaskIsCompleted)
 }
 </script>
 <style scoped>
