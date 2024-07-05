@@ -51,7 +51,6 @@ const status = ref('todo')
 const categories = ['todoTasks', 'doingTasks', 'doneTasks']
 const submitForm = async () => {
   const newTask = {
-    id: Guid.newGuid().toString(),
     title: taskTitle.value,
     description: taskDescription.value,
     subtasks: subtasks.value.map((subtask) => ({

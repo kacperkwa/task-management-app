@@ -8,20 +8,14 @@ export const useTasksStore = defineStore('tasks', {
   }),
   actions: {
     async addTask(task) {
-      let category = this.getCategory(task.status)
-      if (task.status === 'todo') {
-        category = 'todoTasks'
-      } else if (task.status === 'doing') {
-        category = 'doingTasks'
-      } else if (task.status === 'done') {
-        category = 'doneTasks'
-      }
+      const category = this.getCategory(task.status)
       const response = await fetch(
         `https://management-app-d13cd-default-rtdb.europe-west1.firebasedatabase.app/tasks/${category}.json`,
         { method: 'POST', body: JSON.stringify(task) }
       )
       const responseData = await response.json()
-
+      task.id = responseData.name
+      this[category].push({ ...task })
       console.log(responseData.name)
     },
 
@@ -35,23 +29,35 @@ export const useTasksStore = defineStore('tasks', {
 
       for (const key in responseData) {
         tasks.push({
-          id: responseData[key].id,
+          id: key,
           title: responseData[key].title,
           description: responseData[key].description || '',
           subtasks: responseData[key].subtasks || [],
           status: responseData[key].status
         })
-        console.log(responseData[key].id)
+        console.log()
         this[category] = tasks
       }
     },
-    async saveSubtaskChange(taskId, subtaskIsCompleted) {
+    async saveSubtaskChange(category, taskId, subtaskIsCompleted, subtaskId) {
       const response = await fetch(
-        `https://management-app-d13cd-default-rtdb.europe-west1.firebasedatabase.app/tasks/todoTasks/${taskId}/subtasks.json`,
-        { method: 'PATCH', body: JSON.stringify({ subtasks: subtaskIsCompleted }) }
+        `https://management-app-d13cd-default-rtdb.europe-west1.firebasedatabase.app/tasks/${category}/${taskId}/subtasks/${subtaskId}/isCompleted.json`,
+        { method: 'PUT', body: JSON.stringify(subtaskIsCompleted) }
       )
       const responseData = await response.json()
       console.log(responseData)
+    },
+    getCategory(status) {
+      switch (status) {
+        case 'todo':
+          return 'todoTasks'
+        case 'doing':
+          return 'doingTasks'
+        case 'done':
+          return 'doneTasks'
+        default:
+          return ''
+      }
     }
   }
 })

@@ -63,8 +63,9 @@ const { task } = toRefs(props)
 const subtaskChange = (index) => {
   const subtaskIsCompleted = task.value.subtasks[index].isCompleted
   const taskId = task.value.id
-  console.log(taskId, subtaskIsCompleted)
-  taskStore.saveSubtaskChange(taskId, subtaskIsCompleted)
+  const category = taskStore.getCategory(task.value.status)
+
+  taskStore.saveSubtaskChange(category, taskId, subtaskIsCompleted, index)
 }
 </script>
 <style scoped>
