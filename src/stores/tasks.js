@@ -35,7 +35,6 @@ export const useTasksStore = defineStore('tasks', {
           subtasks: responseData[key].subtasks || [],
           status: responseData[key].status
         })
-        console.log()
         this[category] = tasks
       }
     },
@@ -44,9 +43,35 @@ export const useTasksStore = defineStore('tasks', {
         `https://management-app-d13cd-default-rtdb.europe-west1.firebasedatabase.app/tasks/${category}/${taskId}/subtasks/${subtaskId}/isCompleted.json`,
         { method: 'PUT', body: JSON.stringify(subtaskIsCompleted) }
       )
-      const responseData = await response.json()
-      console.log(responseData)
+      const responseData = await response.json() // eslint-disable-line
     },
+    async saveStatusChange(oldStatus, taskId, newStatus) {
+      if (oldStatus === newStatus) return
+      const oldCategory = this.getCategory(oldStatus)
+      const newCategory = this.getCategory(newStatus)
+      const taskResponse = await fetch(
+        `https://management-app-d13cd-default-rtdb.europe-west1.firebasedatabase.app/tasks/${oldCategory}/${taskId}.json`,
+        { method: 'GET' }
+      )
+      const taskData = await taskResponse.json() // eslint-disable-line
+      taskData.status = newStatus
+      const addTaskResponse = await fetch(
+        `https://management-app-d13cd-default-rtdb.europe-west1.firebasedatabase.app/tasks/${newCategory}/${taskId}.json`,
+        { method: 'PUT', body: JSON.stringify(taskData) }
+      )
+      const addTaskData = await addTaskResponse.json() // eslint-disable-line
+
+      console.log(oldStatus, taskId, newStatus)
+
+      const removeTaskResponse = await fetch(
+        `https://management-app-d13cd-default-rtdb.europe-west1.firebasedatabase.app/tasks/${oldCategory}/${taskId}.json`,
+        { method: 'DELETE' }
+      )
+      const removeTaskData = await removeTaskResponse.json() // eslint-disable-line
+      this[oldCategory] = this[oldCategory].filter((task) => task.id !== taskId)
+      this[newCategory].push({ ...taskData, id: taskId })
+    },
+
     getCategory(status) {
       switch (status) {
         case 'todo':

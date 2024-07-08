@@ -40,7 +40,7 @@
       </div>
       <div class="status">
         <label for="status">Current Status</label>
-        <select id="status" v-model="task.status">
+        <select id="status" v-model="task.status" @change="statusChange">
           <option value="todo">Todo</option>
           <option value="doing">Doing</option>
           <option value="done">Done</option>
@@ -60,12 +60,15 @@ const dialogStore = useDialogStore()
 const taskStore = useTasksStore()
 const props = defineProps(['task', 'subtasks'])
 const { task } = toRefs(props)
+const category = task.value.status
+const taskId = task.value.id
+
 const subtaskChange = (index) => {
   const subtaskIsCompleted = task.value.subtasks[index].isCompleted
-  const taskId = task.value.id
-  const category = taskStore.getCategory(task.value.status)
-
   taskStore.saveSubtaskChange(category, taskId, subtaskIsCompleted, index)
+}
+const statusChange = () => {
+  taskStore.saveStatusChange(category, taskId, task.value.status)
 }
 </script>
 <style scoped>
