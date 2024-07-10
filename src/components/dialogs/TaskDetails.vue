@@ -23,8 +23,8 @@
       </p>
       <div class="subtasks">
         <h3>Subtasks</h3>
-        <p v-if="props.subtasks">Edit your task to add subtask.</p>
-        <ul>
+        <p v-if="!task.subtasks || task.subtasks.length === 0">Edit your task to add subtask.</p>
+        <ul v-else>
           <li v-for="(subtask, index) in task.subtasks" :key="index">
             <input
               type="checkbox"
@@ -53,22 +53,22 @@
 <script setup>
 import BaseDialog from '../layout/BaseDialog.vue'
 import { useDialogStore } from '@/stores/dialog'
-import { toRefs, defineProps } from 'vue'
+import { toRefs, defineProps, ref } from 'vue'
 import { useTasksStore } from '@/stores/tasks'
 
 const dialogStore = useDialogStore()
 const taskStore = useTasksStore()
 const props = defineProps(['task', 'subtasks'])
 const { task } = toRefs(props)
-const category = task.value.status
-const taskId = task.value.id
+const status = task.value.status
+const reactiveTask = ref(task.value)
 
 const subtaskChange = (index) => {
   const subtaskIsCompleted = task.value.subtasks[index].isCompleted
-  taskStore.saveSubtaskChange(category, taskId, subtaskIsCompleted, index)
+  taskStore.saveSubtaskChange(task.value.status, reactiveTask.value.id, subtaskIsCompleted, index)
 }
 const statusChange = () => {
-  taskStore.saveStatusChange(category, taskId, task.value.status)
+  taskStore.saveStatusChange(status, reactiveTask.value.id, reactiveTask.value.status)
 }
 </script>
 <style scoped>
@@ -117,11 +117,17 @@ h3 {
 .subtasks li {
   display: flex;
   gap: 1rem;
-  padding: 1rem;
+  padding: 0.5rem;
+  align-items: center;
   margin-bottom: 0.5rem;
   border-radius: 4px;
   background-color: #20212c;
   font-size: 12px;
+}
+.subtasks li input {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
 }
 select {
   padding: 0.5rem;

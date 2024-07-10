@@ -15,8 +15,12 @@
       <li v-for="task in props.tasks" :key="task.id" @click="showDetails(task)">
         <base-card
           :task-title="task.title"
-          :done-subtasks="task.subtasks.filter((subtask) => subtask.isCompleted).length"
-          :all-subtasks="task.subtasks.length"
+          :done-subtasks="
+            Array.isArray(task.subtasks)
+              ? task.subtasks.filter((subtask) => subtask.isCompleted).length
+              : 0
+          "
+          :all-subtasks="Array.isArray(task.subtasks) ? task.subtasks.length : 0"
         ></base-card>
       </li>
     </template>

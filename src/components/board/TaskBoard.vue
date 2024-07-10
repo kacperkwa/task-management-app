@@ -21,7 +21,9 @@
 
     <task-details
       :task="dialogStore.dialogTask"
-      :subtasks="dialogStore.dialogTask.subtasks.length === 0"
+      :subtasks="
+        Array.isArray(dialogStore.dialogTask.subtasks) ? dialogStore.dialogTask.subtasks : []
+      "
       v-if="dialogStore.isTaskDialogVisible"
     ></task-details>
   </main>

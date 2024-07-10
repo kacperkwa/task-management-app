@@ -53,10 +53,13 @@ const submitForm = async () => {
   const newTask = {
     title: taskTitle.value,
     description: taskDescription.value,
-    subtasks: subtasks.value.map((subtask) => ({
-      text: subtask.text,
-      isCompleted: subtask.isCompleted
-    })),
+    subtasks:
+      subtasks.value.length > 0
+        ? subtasks.value.map((subtask) => ({
+            text: subtask.text,
+            isCompleted: subtask.isCompleted
+          }))
+        : [],
     status: status.value
   }
 

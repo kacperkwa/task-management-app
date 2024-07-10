@@ -14,7 +14,10 @@ export const useTasksStore = defineStore('tasks', {
         { method: 'POST', body: JSON.stringify(task) }
       )
       const responseData = await response.json()
-      task.id = responseData.name
+      console.log(task.subtasks.length)
+      if (task.subtasks.length === 0) {
+        task.subtasks = 'qwe'
+      }
       this[category].push({ ...task })
       console.log(responseData.name)
     },
@@ -35,14 +38,17 @@ export const useTasksStore = defineStore('tasks', {
           subtasks: responseData[key].subtasks || [],
           status: responseData[key].status
         })
-        this[category] = tasks
       }
+      this[category] = tasks
+      console.log(`Tasks fetched for ${category}:`, tasks)
     },
-    async saveSubtaskChange(category, taskId, subtaskIsCompleted, subtaskId) {
+    async saveSubtaskChange(status, taskId, subtaskIsCompleted, subtaskId) {
+      const category = this.getCategory(status)
       const response = await fetch(
         `https://management-app-d13cd-default-rtdb.europe-west1.firebasedatabase.app/tasks/${category}/${taskId}/subtasks/${subtaskId}/isCompleted.json`,
         { method: 'PUT', body: JSON.stringify(subtaskIsCompleted) }
       )
+
       const responseData = await response.json() // eslint-disable-line
     },
     async saveStatusChange(oldStatus, taskId, newStatus) {
@@ -53,7 +59,7 @@ export const useTasksStore = defineStore('tasks', {
         `https://management-app-d13cd-default-rtdb.europe-west1.firebasedatabase.app/tasks/${oldCategory}/${taskId}.json`,
         { method: 'GET' }
       )
-      const taskData = await taskResponse.json() // eslint-disable-line
+      const taskData = await taskResponse.json()
       taskData.status = newStatus
       const addTaskResponse = await fetch(
         `https://management-app-d13cd-default-rtdb.europe-west1.firebasedatabase.app/tasks/${newCategory}/${taskId}.json`,
