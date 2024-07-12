@@ -85,6 +85,9 @@ const toggleSubtask = (index) => {
 const toggleTaskMenu = () => {
   toggleMenu.value = !toggleMenu.value
 }
+const closeMenu = () => {
+  toggleMenu.value = false
+}
 
 const deleteTask = (taskStatus, taskId) => {
   taskStore.removeTask(taskStatus, taskId)

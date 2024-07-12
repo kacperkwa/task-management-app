@@ -18,15 +18,15 @@ const deleteTask = (taskStatus, taskId) => {
 div {
   position: absolute;
   top: 40px;
-  right: 20px;
+  right: 13px;
   display: flex;
   flex-direction: column;
   align-items: start;
   gap: 1rem;
-  padding: 1rem 5rem 1rem 1rem;
-  border-radius: 8px 2px 8px 8px;
+  padding: 2rem 6rem 2rem 2rem;
+  border-radius: 8px 0 8px 8px;
   background-color: #20212c;
-  box-shadow: 0px 10px 20px 0px rgba(54, 78, 126, 0.25);
+  box-shadow: 0px 5px 20px 0px rgba(54, 78, 126, 0.25);
 }
 button {
   background-color: transparent;
