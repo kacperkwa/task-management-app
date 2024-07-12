@@ -3,7 +3,7 @@
     <div class="container">
       <div class="title-section">
         <h3>{{ props.task.title }}</h3>
-        <button class="options-btn">
+        <button @click="toggleTaskMenu" class="options-btn">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="5"
@@ -17,7 +17,7 @@
           </svg>
         </button>
       </div>
-
+      <tasks-menu v-if="toggleMenu"></tasks-menu>
       <p class="description">
         {{ props.task.description }}
       </p>
@@ -25,16 +25,19 @@
         <h3>Subtasks</h3>
         <p v-if="!task.subtasks || task.subtasks.length === 0">Edit your task to add subtask.</p>
         <ul v-else>
-          <li v-for="(subtask, index) in task.subtasks" :key="index">
+          <li v-for="(subtask, index) in task.subtasks" :key="index" @click="toggleSubtask(index)">
             <input
               type="checkbox"
               :id="'subtask' + index"
               v-model="subtask.isCompleted"
               @change="subtaskChange(index)"
             />
-            <label :class="{ completed: subtask.isCompleted }" :for="'subtask' + index">{{
-              subtask.text
-            }}</label>
+            <label
+              @click="toggleSubtask(index)"
+              :class="{ completed: subtask.isCompleted }"
+              :for="'subtask' + index"
+              >{{ subtask.text }}</label
+            >
           </li>
         </ul>
       </div>
@@ -52,6 +55,7 @@
 
 <script setup>
 import BaseDialog from '../layout/BaseDialog.vue'
+import TasksMenu from '../tasks/TasksMenu.vue'
 import { useDialogStore } from '@/stores/dialog'
 import { toRefs, defineProps, ref } from 'vue'
 import { useTasksStore } from '@/stores/tasks'
@@ -62,6 +66,7 @@ const props = defineProps(['task', 'subtasks'])
 const { task } = toRefs(props)
 const status = task.value.status
 const reactiveTask = ref(task.value)
+const toggleMenu = ref(false)
 
 const subtaskChange = (index) => {
   const subtaskIsCompleted = task.value.subtasks[index].isCompleted
@@ -69,6 +74,13 @@ const subtaskChange = (index) => {
 }
 const statusChange = () => {
   taskStore.saveStatusChange(status, reactiveTask.value.id, reactiveTask.value.status)
+}
+const toggleSubtask = (index) => {
+  reactiveTask.value.subtasks[index].isCompleted = !reactiveTask.value.subtasks[index].isCompleted
+  subtaskChange(index)
+}
+const toggleTaskMenu = () => {
+  toggleMenu.value = !toggleMenu.value
 }
 </script>
 <style scoped>
@@ -93,6 +105,7 @@ h3 {
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
+  position: relative;
 }
 .options-btn {
   background-color: transparent;
@@ -124,11 +137,19 @@ h3 {
   background-color: #20212c;
   font-size: 12px;
 }
+.subtasks li:hover {
+  background-color: #635fc7;
+  cursor: pointer;
+}
 .subtasks li input {
   width: 20px;
   height: 20px;
+}
+
+.subtasks li label {
   cursor: pointer;
 }
+
 select {
   padding: 0.5rem;
   font-size: 13px;
