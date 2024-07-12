@@ -40,7 +40,6 @@ export const useTasksStore = defineStore('tasks', {
         })
       }
       this[category] = tasks
-      console.log(`Tasks fetched for ${category}:`, tasks)
     },
     async removeTask(status, taskId) {
       const category = this.getCategory(status)

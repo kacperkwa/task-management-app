@@ -17,10 +17,12 @@
           </svg>
         </button>
       </div>
-      <tasks-menu
-        v-if="toggleMenu"
-        @delete-task="deleteTask(props.task.status, props.task.id)"
-      ></tasks-menu>
+      <tasks-menu v-if="toggleMenu"></tasks-menu>
+      <delete-task
+        v-if="dialogStore.isDeleteDialogVisible"
+        :task-title="task.title"
+        @delete-task="removeTask"
+      ></delete-task>
       <p class="description">
         {{ props.task.description }}
       </p>
@@ -59,6 +61,7 @@
 <script setup>
 import BaseDialog from '../layout/BaseDialog.vue'
 import TasksMenu from '../tasks/TasksMenu.vue'
+import DeleteTask from './DeleteTask.vue'
 import { useDialogStore } from '@/stores/dialog'
 import { toRefs, defineProps, ref } from 'vue'
 import { useTasksStore } from '@/stores/tasks'
@@ -85,13 +88,10 @@ const toggleSubtask = (index) => {
 const toggleTaskMenu = () => {
   toggleMenu.value = !toggleMenu.value
 }
-const closeMenu = () => {
-  toggleMenu.value = false
-}
-
-const deleteTask = (taskStatus, taskId) => {
-  taskStore.removeTask(taskStatus, taskId)
+const removeTask = () => {
   dialogStore.hideTaskDetails()
+  taskStore.removeTask(reactiveTask.value.status, reactiveTask.value.id)
+  dialogStore.hideDeleteDialog()
 }
 </script>
 <style scoped>

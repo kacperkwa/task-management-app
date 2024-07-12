@@ -5,6 +5,7 @@ export const useDialogStore = defineStore('dialog', {
     isAddTaskFormVisible: false,
     isLogginFormVisible: false,
     isTaskDialogVisible: false,
+    isDeleteDialogVisible: false,
     dialogTask: null
   }),
   actions: {
@@ -27,6 +28,13 @@ export const useDialogStore = defineStore('dialog', {
     hideTaskDetails() {
       this.isTaskDialogVisible = false
       this.dialogTask = null
+    },
+    showDeleteDialog() {
+      this.isDeleteDialogVisible = true
+      console.log('asd')
+    },
+    hideDeleteDialog() {
+      this.isDeleteDialogVisible = false
     }
   }
 })
