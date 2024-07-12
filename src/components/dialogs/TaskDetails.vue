@@ -17,7 +17,10 @@
           </svg>
         </button>
       </div>
-      <tasks-menu v-if="toggleMenu"></tasks-menu>
+      <tasks-menu
+        v-if="toggleMenu"
+        @delete-task="deleteTask(props.task.status, props.task.id)"
+      ></tasks-menu>
       <p class="description">
         {{ props.task.description }}
       </p>
@@ -81,6 +84,11 @@ const toggleSubtask = (index) => {
 }
 const toggleTaskMenu = () => {
   toggleMenu.value = !toggleMenu.value
+}
+
+const deleteTask = (taskStatus, taskId) => {
+  taskStore.removeTask(taskStatus, taskId)
+  dialogStore.hideTaskDetails()
 }
 </script>
 <style scoped>

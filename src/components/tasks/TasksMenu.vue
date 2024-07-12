@@ -1,10 +1,19 @@
 <template>
   <div class="tasks-menu">
-    <button class="edit-task-btn">Edit Task</button>
-    <button class="delete-task-btn">Delete Task</button>
+    <button class="edit-task-btn" @click="editTask">Edit Task</button>
+    <button class="delete-task-btn" @click="deleteTask">Delete Task</button>
   </div>
 </template>
-
+<script setup>
+import { defineEmits } from 'vue'
+const emit = defineEmits(['editTask', 'deleteTask'])
+const editTask = () => {
+  emit('editTask')
+}
+const deleteTask = (taskStatus, taskId) => {
+  emit('deleteTask', taskStatus, taskId)
+}
+</script>
 <style scoped>
 div {
   position: absolute;

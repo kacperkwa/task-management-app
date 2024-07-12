@@ -42,6 +42,16 @@ export const useTasksStore = defineStore('tasks', {
       this[category] = tasks
       console.log(`Tasks fetched for ${category}:`, tasks)
     },
+    async removeTask(status, taskId) {
+      const category = this.getCategory(status)
+      const response = await fetch(
+        `https://management-app-d13cd-default-rtdb.europe-west1.firebasedatabase.app/tasks/${category}/${taskId}.json`,
+        { method: 'DELETE' }
+      )
+      const responseData = await response.json() // eslint-disable-line
+      this[category] = this[category].filter((task) => task.id !== taskId)
+    },
+
     async saveSubtaskChange(status, taskId, subtaskIsCompleted, subtaskId) {
       const category = this.getCategory(status)
       const response = await fetch(
