@@ -4,22 +4,21 @@
     <empty-board v-if="isEmpty"></empty-board>
     <task-board v-if="!isEmpty"></task-board>
     <add-new-task v-if="store.isAddTaskFormVisible"></add-new-task>
-
     <user-auth v-if="store.isLogginFormVisible"></user-auth>
   </div>
 </template>
 <script setup>
 import { useDialogStore } from './stores/dialog.js'
+import { useTasksStore } from './stores/tasks.js'
 
 import UserAuth from './components/dialogs/UserAuth.vue'
 import TheHeader from './components/layout/TheHeader.vue'
 import EmptyBoard from './components/board/EmptyBoard.vue'
 import AddNewTask from './components/dialogs/AddNewTask.vue'
 import TaskBoard from './components/board/TaskBoard.vue'
-
 const store = useDialogStore()
-
-const isEmpty = false
+const taskStore = useTasksStore()
+const isEmpty = taskStore.tasks === undefined
 </script>
 <style>
 .app {

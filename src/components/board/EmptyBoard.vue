@@ -14,8 +14,10 @@
 
 <script setup>
 import { useDialogStore } from '@/stores/dialog'
+import { useAuthStore } from '@/stores/auth'
 import { ref } from 'vue'
-const isLoggedIn = ref(true)
+const authStore = useAuthStore()
+const isLoggedIn = ref(authStore.isLoggedIn)
 const dialogStore = useDialogStore()
 const showAddForm = () => {
   dialogStore.showAddTaskForm()
