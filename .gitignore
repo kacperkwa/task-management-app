@@ -6,8 +6,9 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
-firebase.js
 
+
+src/firebase.js
 node_modules
 .DS_Store
 dist-ssr
