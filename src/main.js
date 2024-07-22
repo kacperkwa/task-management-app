@@ -4,6 +4,7 @@ import './assets/reset.css'
 import App from './App.vue'
 import BaseButton from './components/UI/BaseButton.vue'
 import BaseDialog from './components/layout/BaseDialog.vue'
+import './firebase'
 
 const app = createApp(App)
 const pinia = createPinia()

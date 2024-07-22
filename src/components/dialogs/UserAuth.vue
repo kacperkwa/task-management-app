@@ -2,7 +2,7 @@
   <base-dialog @close="closeLoginForm">
     <form @submit.prevent="submitForm">
       <h2>{{ submitCaption }}</h2>
-      <input type="text" placeholder="Username" v-model="userName" />
+      <input type="email" placeholder="E-mail" v-model="userMail" />
       <input type="password" placeholder="Password" v-model="userPassword" />
       <p class="val-message" v-if="!isValid">{{ message }}</p>
       <base-button class="submit-action-btn">{{ submitCaption }}</base-button>
@@ -19,7 +19,7 @@ import { useAuthStore } from '@/stores/auth'
 import { ref, computed } from 'vue'
 const dialogStore = useDialogStore()
 const authStore = useAuthStore()
-const userName = ref('')
+const userMail = ref('')
 const userPassword = ref('')
 const actionMode = ref('login')
 const message =
@@ -43,15 +43,14 @@ const changeActionMode = () => {
 }
 const submitForm = () => {
   isValid.value = true
-  if (userName.value === '' || userPassword.value.length < 6) {
+  if (userMail.value === '' || !userMail.value.includes('@') || userPassword.value.length < 6) {
     isValid.value = false
-
     return
   }
   if (actionMode.value === 'login') {
-    authStore.login(userName.value, userPassword.value)
+    authStore.login(userMail.value, userPassword.value)
   } else {
-    console.log('Signing up')
+    authStore.signup(userMail.value, userPassword.value)
   }
 }
 </script>

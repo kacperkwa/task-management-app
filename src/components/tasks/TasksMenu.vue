@@ -4,14 +4,13 @@
     <button class="delete-task-btn" @click="deleteTask">Delete Task</button>
   </div>
 </template>
+
 <script setup>
-import { defineEmits } from 'vue'
-const emit = defineEmits(['editTask', 'deleteTask'])
-const editTask = () => {
-  emit('editTask')
-}
-const deleteTask = (taskStatus, taskId) => {
-  emit('deleteTask', taskStatus, taskId)
+import { useDialogStore } from '@/stores/dialog'
+const dialogStore = useDialogStore()
+
+const deleteTask = () => {
+  dialogStore.showDeleteDialog()
 }
 </script>
 <style scoped>

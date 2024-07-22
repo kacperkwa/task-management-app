@@ -13,11 +13,13 @@ export const useTasksStore = defineStore('tasks', {
         `https://management-app-d13cd-default-rtdb.europe-west1.firebasedatabase.app/tasks/${category}.json`,
         { method: 'POST', body: JSON.stringify(task) }
       )
-      const responseData = await response.json()
-      console.log(task.subtasks.length)
-      if (task.subtasks.length === 0) {
-        task.subtasks = 'qwe'
+
+      if (!response.ok) {
+        alert('Something went wrong')
+        throw new Error('Something went wrong')
       }
+
+      const responseData = await response.json()
       this[category].push({ ...task })
       console.log(responseData.name)
     },
@@ -40,7 +42,6 @@ export const useTasksStore = defineStore('tasks', {
         })
       }
       this[category] = tasks
-      console.log(`Tasks fetched for ${category}:`, tasks)
     },
     async removeTask(status, taskId) {
       const category = this.getCategory(status)
