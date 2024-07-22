@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { apiKey } from '../firebase.js'
 export const useAuthStore = defineStore('auth', {
   state: () => ({
     isLoggedIn: false
@@ -6,12 +7,10 @@ export const useAuthStore = defineStore('auth', {
 
   actions: {
     async auth(userEmail, userPassword, mode) {
-      let url =
-        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAmwGQlRKEJQC21a3aoHo8BSMu6PcMV3gs'
+      let url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${apiKey}`
 
       if (mode === 'signup') {
-        url =
-          'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAmwGQlRKEJQC21a3aoHo8BSMu6PcMV3gs'
+        url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${apiKey}`
       }
       const response = await fetch(url, {
         method: 'POST',
