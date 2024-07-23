@@ -28,12 +28,12 @@ export const useAuthStore = defineStore('auth', {
         throw error
       }
       if (mode === 'login') {
-        this.setIsLoggedIn(responseData.idToken, responseData.localId, true)
-        console.log(this.setIsLoggedIn)
+        this.isLoggedIn = true
+        console.log(this.isLoggedIn)
       }
 
       this.token = responseData.idToken
-      console.log(responseData.idToken)
+      console.log(responseData)
     },
     async signup(userEmail, userPassword) {
       try {
@@ -45,7 +45,6 @@ export const useAuthStore = defineStore('auth', {
     async login(userEmail, userPassword) {
       try {
         await this.auth(userEmail, userPassword, 'login')
-        this.isLoggedIn = true
       } catch (error) {
         console.log('Login failed', error)
       }
