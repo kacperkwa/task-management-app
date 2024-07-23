@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { useAuthStore } from './auth.js'
 
 export const useTasksStore = defineStore('tasks', {
   state: () => ({
@@ -8,9 +9,10 @@ export const useTasksStore = defineStore('tasks', {
   }),
   actions: {
     async addTask(task) {
+      const authStore = useAuthStore()
       const category = this.getCategory(task.status)
       const response = await fetch(
-        `https://management-app-d13cd-default-rtdb.europe-west1.firebasedatabase.app/tasks/${category}.json`,
+        `https://management-app-d13cd-default-rtdb.europe-west1.firebasedatabase.app/tasks/${category}.json?auth=${authStore.token}`,
         { method: 'POST', body: JSON.stringify(task) }
       )
 
@@ -25,8 +27,9 @@ export const useTasksStore = defineStore('tasks', {
     },
 
     async fetchTasks(category) {
+      const authStore = useAuthStore()
       const response = await fetch(
-        `https://management-app-d13cd-default-rtdb.europe-west1.firebasedatabase.app/tasks/${category}.json`,
+        `https://management-app-d13cd-default-rtdb.europe-west1.firebasedatabase.app/tasks/${category}.json?auth=${authStore.token}`,
         { method: 'GET' }
       )
       const responseData = await response.json()

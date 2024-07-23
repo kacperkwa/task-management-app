@@ -2,6 +2,8 @@ import { defineStore } from 'pinia'
 import { apiKey } from '../firebase.js'
 export const useAuthStore = defineStore('auth', {
   state: () => ({
+    token: null,
+    userId: null,
     isLoggedIn: false
   }),
 
@@ -25,6 +27,13 @@ export const useAuthStore = defineStore('auth', {
         const error = new Error(responseData.message || 'Failed to authenticate.')
         throw error
       }
+      if (mode === 'login') {
+        this.setIsLoggedIn(responseData.idToken, responseData.localId, true)
+        console.log(this.setIsLoggedIn)
+      }
+
+      this.token = responseData.idToken
+      console.log(responseData.idToken)
     },
     async signup(userEmail, userPassword) {
       try {
@@ -40,6 +49,12 @@ export const useAuthStore = defineStore('auth', {
       } catch (error) {
         console.log('Login failed', error)
       }
+    },
+
+    setIsLoggedIn(token, userId, isLoggedIn) {
+      this.token = token
+      this.userId = userId
+      this.isLoggedIn = isLoggedIn
     }
   }
 })
