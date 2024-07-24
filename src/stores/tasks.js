@@ -10,6 +10,8 @@ export const useTasksStore = defineStore('tasks', {
   actions: {
     async addTask(task) {
       const authStore = useAuthStore()
+      const userId = authStore.userId
+      console.log(userId)
       const category = this.getCategory(task.status)
       const response = await fetch(
         `https://management-app-d13cd-default-rtdb.europe-west1.firebasedatabase.app/tasks/${category}.json?auth=${authStore.token}`,
@@ -106,3 +108,6 @@ export const useTasksStore = defineStore('tasks', {
     }
   }
 })
+
+
+// `https://management-app-d13cd-default-rtdb.europe-west1.firebasedatabase.app/${userId}/${columns}/tasks/${category}.json?auth=${authStore.token}`,

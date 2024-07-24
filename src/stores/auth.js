@@ -29,6 +29,7 @@ export const useAuthStore = defineStore('auth', {
       }
       if (mode === 'login') {
         this.isLoggedIn = true
+        this.userId = responseData.localId
         console.log(this.isLoggedIn)
       }
 
@@ -48,6 +49,8 @@ export const useAuthStore = defineStore('auth', {
       } catch (error) {
         console.log('Login failed', error)
       }
+
+      console.log(this.userId)
     },
 
     setIsLoggedIn(token, userId, isLoggedIn) {
