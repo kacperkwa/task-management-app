@@ -14,7 +14,7 @@ export const useTasksStore = defineStore('tasks', {
       console.log(userId)
       const category = this.getCategory(task.status)
       const response = await fetch(
-        `https://management-app-d13cd-default-rtdb.europe-west1.firebasedatabase.app/tasks/${category}.json?auth=${authStore.token}`,
+        `https://management-app-d13cd-default-rtdb.europe-west1.firebasedatabase.app/users/${authStore.userId}/boardname/${category}.json?auth=${authStore.token}`,
         { method: 'POST', body: JSON.stringify(task) }
       )
 
@@ -108,6 +108,5 @@ export const useTasksStore = defineStore('tasks', {
     }
   }
 })
-
 
 // `https://management-app-d13cd-default-rtdb.europe-west1.firebasedatabase.app/${userId}/${columns}/tasks/${category}.json?auth=${authStore.token}`,
